@@ -2,7 +2,7 @@
 # Airbnb Clone 🏠
 
 A full-stack Airbnb-like web application that enables users to create, manage, and explore property listings.  
-This project focuses on implementing real-world backend functionality such as authentication, authorization, and CRUD operations using a clean and scalable architecture.
+This project focuses on implementing real-world backend functionality and CRUD operations using a clean and scalable architecture.
 
 ---
 
