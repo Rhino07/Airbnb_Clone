@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -9,7 +10,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressErrors = require("./utils/ExpressErrors.js");
 const { listingSchema } = require("./schema.js");
 
-const mongo_url = "mongodb://127.0.0.1:27017/traveller";
+const mongo_url = process.env.MONGO_URI;
 
 async function main() {
     await mongoose.connect(mongo_url);
@@ -127,6 +128,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error.ejs", { statusCode, message });
 });
 
-app.listen(8080, () => {
-    console.log("Server is listening on port 8080");
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
