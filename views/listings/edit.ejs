@@ -1,0 +1,79 @@
+<% layout("/layouts/boilerplate") -%>
+
+    <div class="new-listing-wrapper my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+
+                <div class="new-listing-card p-4 p-md-5">
+                    <h3 class="new-listing-heading text-center mb-4">
+                        Edit Listing
+                    </h3>
+
+                    <form class="new-listing-form needs-validation" action="/listings/<%= listing._id %>?_method=PUT"
+                        method="post" novalidate>
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control new-listing-input" name="listing[title]"
+                                value="<%= listing.title %>" required>
+                            <div class="invalid-feedback">
+                                Title is required.
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control new-listing-input" name="listing[description]"
+                                value="<%= listing.description %>" required>
+                            <div class="invalid-feedback">
+                                Description is required.
+                            </div>
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control new-listing-input" name="listing[image]"
+                                value="<%= listing.image.url %>">
+                            <small class="new-listing-hint">
+                                Update image URL if needed
+                            </small>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-3">
+                            <input type="number" class="form-control new-listing-input" name="listing[price]"
+                                value="<%= listing.price %>" min="1" required>
+                            <div class="invalid-feedback">
+                                Price must be a positive number.
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control new-listing-input" name="listing[location]"
+                                value="<%= listing.location %>" required>
+                            <div class="invalid-feedback">
+                                Location is required.
+                            </div>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="mb-4">
+                            <input type="text" class="form-control new-listing-input" name="listing[country]"
+                                value="<%= listing.country %>" required>
+                            <div class="invalid-feedback">
+                                Country is required.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn new-listing-btn w-100">
+                            <i class="fa-solid fa-floppy-disk me-2"></i>
+                            Save Changes
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
