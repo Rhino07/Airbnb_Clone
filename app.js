@@ -8,7 +8,9 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressErrors = require("./utils/ExpressErrors.js");
-const { listingSchema } = require("./schema.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
+const Review = require("./models/review.js");
+
 
 const mongo_url = process.env.MONGO_URI;
 
@@ -42,6 +44,16 @@ const validateListing = (req, res, next) => {
     }
 }
 
+validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join("");
+        throw new ExpressErrors(400, errMsg);
+    } else {
+        next();
+    }
+};
+
 // Home
 app.get("/", async (req, res) => {
     const allListings = await Listing.find({});
@@ -64,7 +76,7 @@ app.get(
     "/listings/:id",
     wrapAsync(async (req, res) => {
         const { id } = req.params;
-        const listing = await Listing.findById(id);
+        const listing = await Listing.findById(id).populate("reviews");
         res.render("listings/show.ejs", { listing });
     })
 );
@@ -89,7 +101,7 @@ app.get(
     })
 );
 
-// Update ✅ validators enabled
+// Update 
 app.put(
     "/listings/:id", validateListing,
     wrapAsync(async (req, res) => {
@@ -111,12 +123,45 @@ app.delete(
     })
 );
 
+// Reviews - POST route
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+    const listing = await Listing.findById(req.params.id);
+
+    if (!listing) {
+        return res.status(404).send("Listing not found");
+    }
+
+    const newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+
+    await newReview.save();
+    await listing.save();
+
+    console.log("New review saved");
+    res.redirect(`/listings/${listing._id}`);
+}));
+
+// DELETE Review
+app.delete("/listings/:id/reviews/:reviewId", async (req, res) => {
+    const { id, reviewId } = req.params;
+
+    // remove review reference from listing
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+
+    // delete review document
+    await Review.findByIdAndDelete(reviewId);
+
+    res.redirect(`/listings/${id}`);
+});
+
+
 // 404 handler
 app.use((req, res, next) => {
     next(new ExpressErrors(404, "Page Not Found!!"));
 });
 
-// Global error handler ✅ handles Mongoose validation errors
+// Global error handler
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = err;
 

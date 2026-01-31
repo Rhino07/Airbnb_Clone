@@ -288,3 +288,124 @@ body {
     background-color: #dc3545;
     color: #fff;
 }
+
+/* ============================= */
+/* Review Section (NEW FEATURE)  */
+/* ============================= */
+
+/* ============================= */
+/* Airbnb Style Reviews (NEW)    */
+/* ============================= */
+
+.review-section .review-count {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.review-empty {
+    padding: 14px 16px;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    border-radius: 14px;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+/* if you want 2 columns on big screens */
+@media (min-width: 992px) {
+    .review-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.review-card-airbnb {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 18px;
+    padding: 16px 16px;
+    background: #fff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.review-card-airbnb:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+.review-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d6efd;
+    font-size: 0.95rem;
+}
+
+.review-name {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: #222;
+    line-height: 1.1;
+}
+
+.review-date {
+    font-size: 0.85rem;
+}
+
+.review-delete-btn {
+    border: none;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 12px;
+    color: rgba(0, 0, 0, 0.45);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.review-delete-btn:hover {
+    background: rgba(220, 53, 69, 0.12);
+    color: #dc3545;
+}
+
+.review-stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.review-stars i {
+    color: #ffb400;
+    /* Airbnb-ish gold */
+}
+
+.review-rating-number {
+    margin-left: 8px;
+    font-weight: 700;
+    color: #222;
+    font-size: 0.92rem;
+}
+
+.review-comment {
+    font-size: 0.98rem;
+    color: #333;
+    line-height: 1.5;
+}
